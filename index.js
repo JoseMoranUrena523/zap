@@ -4,7 +4,6 @@ const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const request = require('request');
 const csurf = require('csurf');
-const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 
 const app = express();
@@ -76,11 +75,7 @@ app.get('/', (req, res) => {
 });
 
 // Auth Routes
-app.get('/login', rateLimit({
-  windowMs: 60 * 1000,
-  max: 5,
-  message: 'Too many requests from this IP, please try again later.'
-}), csurf(), passport.authenticate('auth0', {
+app.get('/login', csurf(), passport.authenticate('auth0', {
   scope: 'openid profile'
 }));
 
