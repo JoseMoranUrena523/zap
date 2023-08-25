@@ -36,8 +36,6 @@ app.use(helmet.frameguard({ action: 'deny' })); // X-Frame-Options
 app.use(helmet.xssFilter()); // X-XSS-Protection
 app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true, preload: true })); // Strict-Transport-Security
 
-app.set('trust proxy', true);
-
 // Configure Passport
 passport.use(new Auth0Strategy({
     domain: 'dev-zggqvh0tncla0n3k.us.auth0.com',
