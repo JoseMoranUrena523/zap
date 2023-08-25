@@ -128,5 +128,5 @@ passport.deserializeUser((user, done) => {
   
 // Start server
 app.listen(8080, () => {
-  console.log('Server started on https://zap-lightning.ondigitalocean.app/');
+  console.log('Server started on https://zap-lightning-6bpgo.ondigitalocean.app/');
 });
