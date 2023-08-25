@@ -13,7 +13,11 @@ const app = express();
 app.use(session({
   secret: 'zap-incredible-session-secret-of-them-all',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    secure: true,
+    sameSite: "strict"
+  }
 }));
 
 app.use(csurf());
