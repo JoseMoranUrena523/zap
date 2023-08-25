@@ -41,7 +41,7 @@ passport.use(new Auth0Strategy({
     domain: 'dev-zggqvh0tncla0n3k.us.auth0.com',
     clientID: '7r0iximHfNEJRa3pJduqo8x8ak5LKRWT',
     clientSecret: '8H24IaSP3zmRCIPoPmrlHKwPmT456lkDbrHb8I2ZDnAGYA4u7PXWMHbIRKe9goT-',
-    callbackURL: 'http://localhost:3000/callback', // Adjust the callback URL
+    callbackURL: 'https://zap-lightning.ondigitalocean.app/callback', // Adjust the callback URL
     passReqToCallback: true // Pass the request object to the callback
 }, (req, accessToken, refreshToken, extraParams, profile, done) => {
     // Make a request to the /userinfo endpoint using the accessToken
@@ -127,6 +127,6 @@ passport.deserializeUser((user, done) => {
 });
   
 // Start server
-app.listen(3000, () => {
-  console.log('Server started on http://localhost:3000');
+app.listen(8080, () => {
+  console.log('Server started on https://zap-lightning.ondigitalocean.app/');
 });
