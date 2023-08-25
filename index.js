@@ -37,7 +37,6 @@ app.use(helmet.xssFilter()); // X-XSS-Protection
 app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true, preload: true })); // Strict-Transport-Security
 
 app.set('trust proxy', 2);
-app.get('/ip', (request, response) => response.send(request.ip));
 
 // Configure Passport
 passport.use(new Auth0Strategy({
