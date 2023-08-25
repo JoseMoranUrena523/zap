@@ -1,0 +1,25 @@
+<span id="userId"></span>
+<span id="displayName"></span>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Zap Interface</title>
+</head>
+<body>
+  <center>
+    <h1>Welcome to Zap!</h1>
+    
+  </center>
+  <script>
+    // Fetch user data from the server and populate the HTML
+    fetch('/dashboardData')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('displayName').textContent = data.displayName;
+        document.getElementById('userId').textContent = data.userId;
+      })
+      .catch(error => console.error('Error fetching user data:', error));
+  </script>
+</body>
+</html>
