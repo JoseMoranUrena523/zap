@@ -32,7 +32,7 @@ app.use(helmet.contentSecurityPolicy({
 }));
 
 app.use(helmet.frameguard({ action: 'deny' })); // X-Frame-Options
-app.use(helmet.xssFilter()); // X-XSS-Protection
+app.use(helmet.xssFilter());
 app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true, preload: true })); // Strict-Transport-Security
 
 // Debugging
