@@ -17,6 +17,7 @@
     "helmet": "^7.0.0",
     "passport": "^0.6.0",
     "passport-auth0": "^1.4.3",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "cors": "^2.8.5"
   }
 }
