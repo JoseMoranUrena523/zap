@@ -17,11 +17,12 @@
   </center>
   <script>
     // Fetch user data from the server and populate the HTML
-    fetch('/dashboardData')
+    fetch('/profile')
       .then(response => response.json())
       .then(data => {
-        document.getElementById('displayName').textContent = data.displayName;
-        document.getElementById('userId').textContent = data.userId;
+        console.log(data);
+        document.getElementById('displayName').textContent = data.name; // Update the property based on your user data structure
+        document.getElementById('userId').textContent = data.sub; // Update the property based on your user data structure
       })
       .catch(error => console.error('Error fetching user data:', error));
   </script>
