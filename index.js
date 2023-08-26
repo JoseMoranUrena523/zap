@@ -21,13 +21,15 @@ app.use(session({
 
 app.use(csurf());
 
+// Security headers for enhanced protection
 app.use(helmet.contentSecurityPolicy({
   directives: {
     defaultSrc: ["'self'"],
     scriptSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
     styleSrc: ["'self'", "cdn.jsdelivr.net"],
     imgSrc: ["'self'"],
-    objectSrc: ["'none'"]
+    objectSrc: ["'none'"],
+    frameAncestors: ["'none'"] // Prevents framing your site in an iframe
   }
 }));
 
@@ -55,10 +57,14 @@ passport.use(new Auth0Strategy({
           return done(err);
         }
   
-        const userInfo = JSON.parse(body);
-        profile.user_info = userInfo;
+        try {
+          const userInfo = JSON.parse(body);
+          profile.user_info = userInfo;
   
-        return done(null, profile);
+          return done(null, profile);
+        } catch (error) {
+          return done(error);
+        }
       }
     );
   }));
@@ -87,17 +93,21 @@ app.get('/callback',
 );
 
 app.get('/dashboardData', (req, res) => {
-  // Access user info from the session
-  const userDisplayName = req.session.passport.user.displayName;
-  const userId = req.session.passport.user.user_id;
+  try {
+    // Access user info from the session
+    const userDisplayName = req.session.passport.user.displayName;
+    const userId = req.session.passport.user.user_id;
 
-  // Create the user profile JSON object
-  const userProfile = {
-    displayName: userDisplayName,
-    userId: userId,
-  };
+    // Create the user profile JSON object
+    const userProfile = {
+      displayName: userDisplayName,
+      userId: userId,
+    };
 
-  res.status(200).json(userProfile);
+    res.status(200).json(userProfile);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while fetching dashboard data' });
+  }
 });
 
 // Serve the dashboard.html file for the /dashboard route
@@ -114,7 +124,15 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
   done(null, user);
 });
-  
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err); // Log the error for debugging purposes
+
+  // Send an appropriate error response to the client
+  res.status(500).json({ error: 'Something went wrong' });
+});
+
 // Start server
 app.listen(8080, () => {
   console.log('Server started on https://zap-lightning-6bpgo.ondigitalocean.app/');
