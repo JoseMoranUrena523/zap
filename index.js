@@ -42,8 +42,7 @@ passport.use(new Auth0Strategy({
     domain: 'dev-zggqvh0tncla0n3k.us.auth0.com',
     clientID: '7r0iximHfNEJRa3pJduqo8x8ak5LKRWT',
     clientSecret: '8H24IaSP3zmRCIPoPmrlHKwPmT456lkDbrHb8I2ZDnAGYA4u7PXWMHbIRKe9goT-',
-    callbackURL: 'https://zap-lightning-6bpgo.ondigitalocean.app/callback', // Adjust the callback URL
-    passReqToCallback: true // Pass the request object to the callback
+    callbackURL: 'https://zap-lightning-6bpgo.ondigitalocean.app/callback'
 }, (req, accessToken, refreshToken, extraParams, profile, done) => {
     // Make a request to the /userinfo endpoint using the accessToken
     request.get(
@@ -71,6 +70,9 @@ app.use(passport.session());
 
 // Routes
 app.get('/', (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.redirect("/dashboard");
+  }
   res.sendFile(__dirname + '/index.html');
 });
 
@@ -90,11 +92,6 @@ app.get('/callback',
 );
 
 app.get('/dashboardData', (req, res) => {
-  // Check if the user is authenticated
-  if (!req.isAuthenticated()) {
-    return res.status(401).json({ message: 'User not authenticated' });
-  }
-
   // Access user info from the session
   const userDisplayName = req.session.passport.user.displayName;
   const userId = req.session.passport.user.user_id;
@@ -110,6 +107,9 @@ app.get('/dashboardData', (req, res) => {
 
 // Serve the dashboard.html file for the /dashboard route
 app.get('/dashboard', (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/login");
+  }
   res.sendFile(__dirname + '/dashboard.html');
 });
 
