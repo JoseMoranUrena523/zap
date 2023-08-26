@@ -19,15 +19,15 @@ app.use(session({
 
 // Configure Passport
 passport.use(new Auth0Strategy({
-    domain: 'dev-zggqvh0tncla0n3k.us.auth0.com',
-    clientID: '7r0iximHfNEJRa3pJduqo8x8ak5LKRWT',
-    clientSecret: '8H24IaSP3zmRCIPoPmrlHKwPmT456lkDbrHb8I2ZDnAGYA4u7PXWMHbIRKe9goT-',
+    domain: 'zap-lightning.us.auth0.com',
+    clientID: 'zrsJruo4diUxQLhJ2iBti3mBPZH1ioRn',
+    clientSecret: 'ZkIZBNpxM4OaZc1eKAjFOajL55Al4RaGiFLK5NtDJNt_3w42wKaizCGQoN3WSOjM',
     callbackURL: 'https://zap-lightning-6bpgo.ondigitalocean.app/callback'
 }, (req, accessToken, refreshToken, extraParams, profile, done) => {
     // Make a request to the /userinfo endpoint using the accessToken
     request.get(
       {
-        url: 'https://dev-zggqvh0tncla0n3k.us.auth0.com/userinfo', // Replace with your Auth0 domain
+        url: 'https://zap-lightning.us.auth0.com/userinfo', // Replace with your Auth0 domain
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
