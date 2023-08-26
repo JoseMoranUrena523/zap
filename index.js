@@ -19,8 +19,6 @@ app.use(session({
   }
 }));
 
-app.use(csurf());
-
 app.use(helmet.contentSecurityPolicy({
   directives: {
     defaultSrc: ["'self'"],
@@ -80,12 +78,11 @@ app.get('/', (req, res) => {
 });
 
 // Auth Routes
-app.get('/login', csurf(), passport.authenticate('auth0', {
+app.get('/login', passport.authenticate('auth0', {
   scope: 'openid profile'
 }));
 
 app.get('/callback',
-  csurf(),
   passport.authenticate('auth0', {
     failureRedirect: '/'
   }),
