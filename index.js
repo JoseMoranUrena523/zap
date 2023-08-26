@@ -57,7 +57,7 @@ passport.use(new Auth0Strategy({
           console.log('Error in Auth0Strategy:', err);
           return done(err);
         }
-  
+
         try {
           const userInfo = JSON.parse(body);
           profile.user_info = userInfo;
@@ -109,6 +109,7 @@ app.get('/dashboardData', (req, res) => {
 
     res.status(200).json(userProfile);
   } catch (error) {
+    console.error('Error fetching dashboard data:', error);
     res.status(500).json({ error: 'An error occurred while fetching dashboard data' });
   }
 });
@@ -130,7 +131,7 @@ passport.deserializeUser((user, done) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err); // Log the error for debugging purposes
+  console.error('An error occurred:', err.message); // Log the error for debugging purposes
 
   // Send an appropriate error response to the client
   res.status(500).json({ error: 'Something went wrong' });
