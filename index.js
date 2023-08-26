@@ -6,7 +6,6 @@ const request = require('request');
 
 const app = express();
 
-// Configure session
 app.use(session({
   secret: 'zap-incredible-session-secret-of-them-all',
   resave: false,
@@ -17,17 +16,15 @@ app.use(session({
   }
 }));
 
-// Configure Passport
 passport.use(new Auth0Strategy({
     domain: 'zap-lightning.us.auth0.com',
     clientID: 'zrsJruo4diUxQLhJ2iBti3mBPZH1ioRn',
     clientSecret: 'ZkIZBNpxM4OaZc1eKAjFOajL55Al4RaGiFLK5NtDJNt_3w42wKaizCGQoN3WSOjM',
     callbackURL: 'https://zap-lightning-6bpgo.ondigitalocean.app/callback'
 }, (req, accessToken, refreshToken, extraParams, profile, done) => {
-    // Make a request to the /userinfo endpoint using the accessToken
     request.get(
       {
-        url: 'https://zap-lightning.us.auth0.com/userinfo', // Replace with your Auth0 domain
+        url: 'https://zap-lightning.us.auth0.com/userinfo',
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -54,12 +51,10 @@ passport.use(new Auth0Strategy({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-// Auth Routes
 app.get('/login', passport.authenticate('auth0', {
   scope: 'openid profile'
 }));
@@ -70,17 +65,15 @@ app.get('/callback',
   }),
   (req, res) => {
     console.log('Successful authentication, redirecting to /dashboard');
-    res.redirect('/dashboard'); // Redirect after successful login
+    res.redirect('/dashboard');
   }
 );
 
 app.get('/dashboardData', (req, res) => {
   try {
-    // Access user info from the session
     const userDisplayName = req.session.passport.user.displayName;
     const userId = req.session.passport.user.user_id;
 
-    // Create the user profile JSON object
     const userProfile = {
       displayName: userDisplayName,
       userId: userId,
@@ -92,30 +85,23 @@ app.get('/dashboardData', (req, res) => {
   }
 });
 
-// Serve the dashboard.html file for the /dashboard route
 app.get('/dashboard', (req, res) => {
   res.sendFile(__dirname + '/dashboard.html');
 });
 
-// Passport serialize function
 passport.serializeUser((user, done) => {
   done(null, user);
 });
   
-// Passport deserializeUser function
 passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err); // Log the error for debugging purposes
-
-  // Send an appropriate error response to the client
+  console.error(err);
   res.status(500).json({ error: 'Something went wrong' });
 });
 
-// Start server
 app.listen(8080, () => {
   console.log('Server started on https://zap-lightning-6bpgo.ondigitalocean.app/');
 });
