@@ -3,7 +3,6 @@ const session = require('express-session');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const request = require('request');
-const csurf = require('csurf');
 const helmet = require('helmet');
 
 const app = express();
@@ -19,24 +18,7 @@ app.use(session({
   }
 }));
 
-app.use(csurf());
-
-app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
-    styleSrc: ["'self'", "cdn.jsdelivr.net"],
-    imgSrc: ["'self'"],
-    objectSrc: ["'none'"]
-  }
-}));
-
-app.use(helmet.frameguard({ action: 'deny' })); // X-Frame-Options
-app.use(helmet.xssFilter());
-app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true, preload: true })); // Strict-Transport-Security
-
-// Debugging
-passport.debug = true;
+app.use(helmet());
 
 // Configure Passport
 passport.use(new Auth0Strategy({
@@ -44,32 +26,28 @@ passport.use(new Auth0Strategy({
     clientID: '7r0iximHfNEJRa3pJduqo8x8ak5LKRWT',
     clientSecret: '8H24IaSP3zmRCIPoPmrlHKwPmT456lkDbrHb8I2ZDnAGYA4u7PXWMHbIRKe9goT-',
     callbackURL: 'https://zap-lightning-6bpgo.ondigitalocean.app/callback'
-}, (req, accessToken, refreshToken, extraParams, profile, done) => {
-    request.get(
-      {
-        url: 'https://dev-zggqvh0tncla0n3k.us.auth0.com/userinfo', // Replace with your Auth0 domain
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      },
-      (err, response, body) => {
-        if (err) {
-          console.log('Error in Auth0Strategy:', err);
-          return done(err);
+}, async (accessToken, refreshToken, extraParams, profile, done) => {
+    try {
+        const userInfoResponse = await fetch('https://dev-zggqvh0tncla0n3k.us.auth0.com/userinfo', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+
+        if (!userInfoResponse.ok) {
+            console.error('Error in fetching user info:', userInfoResponse.statusText);
+            return done(new Error('Failed to fetch user info'));
         }
 
-        try {
-          const userInfo = JSON.parse(body);
-          profile.user_info = userInfo;
-          console.log('Auth0 callback successful:', profile);
-          return done(null, profile);
-        } catch (error) {
-          console.log('Error parsing user info:', error);
-          return done(error);
-        }
-      }
-    );
-  }));
+        const userInfo = await userInfoResponse.json();
+        profile.user_info = userInfo;
+        console.log('Auth0 callback successful:', profile);
+        return done(null, profile);
+    } catch (error) {
+        console.error('Error in Auth0Strategy:', error);
+        return done(error);
+    }
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -80,12 +58,11 @@ app.get('/', (req, res) => {
 });
 
 // Auth Routes
-app.get('/login', csurf(), passport.authenticate('auth0', {
+app.get('/login', passport.authenticate('auth0', {
   scope: 'openid profile'
 }));
 
 app.get('/callback',
-  csurf(),
   passport.authenticate('auth0', {
     failureRedirect: '/'
   }),
@@ -95,43 +72,20 @@ app.get('/callback',
   }
 );
 
-app.get('/dashboardData', (req, res) => {
-  try {
-    // Access user info from the session
-    const userDisplayName = req.session.passport.user.displayName;
-    const userId = req.session.passport.user.user_id;
-
-    // Create the user profile JSON object
-    const userProfile = {
-      displayName: userDisplayName,
-      userId: userId,
-    };
-
-    res.status(200).json(userProfile);
-  } catch (error) {
-    console.error('Error fetching dashboard data:', error);
-    res.status(500).json({ error: 'An error occurred while fetching dashboard data' });
-  }
-});
-
-// Serve the dashboard.html file for the /dashboard route
 app.get('/dashboard', (req, res) => {
-  res.sendFile(__dirname + '/dashboard.html');
-});
-
-// Passport serialize function
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-  
-// Passport deserializeUser function
-passport.deserializeUser((user, done) => {
-  done(null, user);
+  // Check if the user is authenticated
+  if (req.isAuthenticated()) {
+    // Render the dashboard
+    res.sendFile(__dirname + '/dashboard.html');
+  } else {
+    // Redirect to login if not authenticated
+    res.redirect('/login');
+  }
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error('An error occurred:', err.message); // Log the error for debugging purposes
+  console.error('An error occurred:', err.message);
 
   // Send an appropriate error response to the client
   res.status(500).json({ error: 'Something went wrong' });
