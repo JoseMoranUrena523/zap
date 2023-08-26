@@ -3,6 +3,7 @@ const session = require('express-session');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const request = require('request');
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -102,6 +103,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong' });
 });
 
-app.listen(3000, () => {
-  console.log('Server started!');
-});
+app.listen(port, () =>
+  console.log(`Zap Lightning is up and listening on port ${port}!`);
+);
