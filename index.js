@@ -45,7 +45,6 @@ passport.use(new Auth0Strategy({
     clientSecret: '8H24IaSP3zmRCIPoPmrlHKwPmT456lkDbrHb8I2ZDnAGYA4u7PXWMHbIRKe9goT-',
     callbackURL: 'https://zap-lightning-6bpgo.ondigitalocean.app/callback'
 }, (req, accessToken, refreshToken, extraParams, profile, done) => {
-    // Make a request to the /userinfo endpoint using the accessToken
     request.get(
       {
         url: 'https://dev-zggqvh0tncla0n3k.us.auth0.com/userinfo', // Replace with your Auth0 domain
