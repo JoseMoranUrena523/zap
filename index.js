@@ -35,8 +35,6 @@ app.use(helmet.frameguard({ action: 'deny' })); // X-Frame-Options
 app.use(helmet.xssFilter()); // X-XSS-Protection
 app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true, preload: true })); // Strict-Transport-Security
 
-app.set('trust proxy', 2);
-
 // Configure Passport
 passport.use(new Auth0Strategy({
     domain: 'dev-zggqvh0tncla0n3k.us.auth0.com',
@@ -70,9 +68,6 @@ app.use(passport.session());
 
 // Routes
 app.get('/', (req, res) => {
-  if (req.isAuthenticated()) {
-    return res.redirect("/dashboard");
-  }
   res.sendFile(__dirname + '/index.html');
 });
 
@@ -107,9 +102,6 @@ app.get('/dashboardData', (req, res) => {
 
 // Serve the dashboard.html file for the /dashboard route
 app.get('/dashboard', (req, res) => {
-  if (!req.isAuthenticated()) {
-    return res.redirect("/login");
-  }
   res.sendFile(__dirname + '/dashboard.html');
 });
 
