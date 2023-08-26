@@ -21,21 +21,22 @@ app.use(session({
 
 app.use(csurf());
 
-// Security headers for enhanced protection
 app.use(helmet.contentSecurityPolicy({
   directives: {
     defaultSrc: ["'self'"],
     scriptSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
     styleSrc: ["'self'", "cdn.jsdelivr.net"],
     imgSrc: ["'self'"],
-    objectSrc: ["'none'"],
-    frameAncestors: ["'none'"] // Prevents framing your site in an iframe
+    objectSrc: ["'none'"]
   }
 }));
 
 app.use(helmet.frameguard({ action: 'deny' })); // X-Frame-Options
 app.use(helmet.xssFilter()); // X-XSS-Protection
 app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true, preload: true })); // Strict-Transport-Security
+
+// Debugging
+passport.debug = true;
 
 // Configure Passport
 passport.use(new Auth0Strategy({
@@ -54,15 +55,17 @@ passport.use(new Auth0Strategy({
       },
       (err, response, body) => {
         if (err) {
+          console.log('Error in Auth0Strategy:', err);
           return done(err);
         }
   
         try {
           const userInfo = JSON.parse(body);
           profile.user_info = userInfo;
-  
+          console.log('Auth0 callback successful:', profile);
           return done(null, profile);
         } catch (error) {
+          console.log('Error parsing user info:', error);
           return done(error);
         }
       }
@@ -88,6 +91,7 @@ app.get('/callback',
     failureRedirect: '/'
   }),
   (req, res) => {
+    console.log('Successful authentication, redirecting to /dashboard');
     res.redirect('/dashboard'); // Redirect after successful login
   }
 );
