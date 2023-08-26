@@ -36,5 +36,5 @@ app.get('/dashboard', requiresAuth(), (req, res) => {
 
 // Start server
 app.listen(8080, () => {
-  console.log('Server started on https://goldfish-app-nusxd.ondigitalocean.app/');
+  console.log('Server started on port 8080!');
 });
