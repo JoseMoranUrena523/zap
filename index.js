@@ -106,6 +106,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong' });
 });
 
-app.listen(port, () =>
+app.listen(port, () => {
   console.log(`Zap Lightning is up and listening on port ${port}!`);
-);
+});
