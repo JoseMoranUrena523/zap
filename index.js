@@ -102,6 +102,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong' });
 });
 
-app.listen(8080, () => {
-  console.log('Server started on https://zap-lightning-6bpgo.ondigitalocean.app/');
+app.listen(3000, () => {
+  console.log('Server started!');
 });
