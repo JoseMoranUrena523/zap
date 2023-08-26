@@ -3,6 +3,7 @@ const session = require('express-session');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const request = require('request');
+const cors = require('cors');
 const port = process.env.PORT || 3000;
 
 const app = express();
@@ -16,6 +17,8 @@ app.use(session({
     sameSite: "strict"
   }
 }));
+
+app.use(cors());
 
 passport.use(new Auth0Strategy({
     domain: 'zap-lightning.us.auth0.com',
