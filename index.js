@@ -21,7 +21,7 @@ passport.use(new Auth0Strategy({
     domain: 'zap-lightning.us.auth0.com',
     clientID: 'zrsJruo4diUxQLhJ2iBti3mBPZH1ioRn',
     clientSecret: 'ZkIZBNpxM4OaZc1eKAjFOajL55Al4RaGiFLK5NtDJNt_3w42wKaizCGQoN3WSOjM',
-    callbackURL: 'https://zap-lightning-6bpgo.ondigitalocean.app/callback'
+    callbackURL: 'https://goldfish-app-nusxd.ondigitalocean.app/callback'
 }, (req, accessToken, refreshToken, extraParams, profile, done) => {
     request.get(
       {
