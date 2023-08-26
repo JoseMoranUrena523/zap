@@ -3,6 +3,7 @@ const session = require('express-session');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const request = require('request');
+const csurf = require('csurf');
 const helmet = require('helmet');
 
 const app = express();
@@ -17,6 +18,8 @@ app.use(session({
     sameSite: "strict"
   }
 }));
+
+app.use(csurf());
 
 app.use(helmet.contentSecurityPolicy({
   directives: {
@@ -77,11 +80,12 @@ app.get('/', (req, res) => {
 });
 
 // Auth Routes
-app.get('/login', passport.authenticate('auth0', {
+app.get('/login', csurf(), passport.authenticate('auth0', {
   scope: 'openid profile'
 }));
 
 app.get('/callback',
+  csurf(),
   passport.authenticate('auth0', {
     failureRedirect: '/'
   }),
