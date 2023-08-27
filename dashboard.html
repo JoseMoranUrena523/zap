@@ -100,16 +100,18 @@
         
         console.log(requestOptions);
         fetch('https://biteq.teqquu.com/pay-address', requestOptions)
-          .then(response => response.json())
-          .then(paymentResponse => {
-            if (!paymentResponse.detail === null) {
-              return document.getElementById("routingFeeMessage").style.display = "block";
-            }
+        .then(response => response.json())
+        .then(paymentResponse => {
+          if (/[a-zA-Z]/.test(paymentResponse.detail)) {
+            document.getElementById("routingFeeMessage").style.display = "block";
+            document.getElementById("successBtn").disabled = false;
+          } else {
             document.getElementById("successMessage").style.display = "block";
             alert(`Your payment has been completed! Payment Hash: ${paymentResponse.payment_hash}`);
             window.location.reload();
-          })
-          .catch(error => document.getElementById("fetchRequestMessage").style.display = "block");
+          }
+        })
+        .catch(error => document.getElementById("fetchRequestMessage").style.display = "block");
       }
     });
   </script>
