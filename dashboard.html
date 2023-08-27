@@ -99,7 +99,6 @@
           .then(response => response.json())
           .then(paymentResponse => {
             document.getElementById("successMessage").style.display = "block";
-            window.location.reload();
           })
           .catch(error => document.getElementById("fetchRequestMessage").style.display = "block");
       }
