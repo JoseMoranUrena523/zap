@@ -96,6 +96,7 @@
           body: JSON.stringify(paymentData)
         };
         
+        console.log(requestOptions);
         fetch('https://biteq.teqquu.com/pay-address', requestOptions)
           .then(response => response.json())
           .then(paymentResponse => {
