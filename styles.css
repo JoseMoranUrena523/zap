@@ -1,11 +1,9 @@
-body, html {
+body, html, .center-content {
     height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .center-content {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
