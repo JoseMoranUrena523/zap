@@ -21,7 +21,7 @@
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        document.getElementById('displayName').textContent = data.name; // Update the property based on your user data structure
+        document.getElementById('displayName').textContent = data.name;
         document.getElementById('userId').textContent = data.sub; // Update the property based on your user data structure
       })
       .catch(error => console.error('Error fetching user data:', error));
