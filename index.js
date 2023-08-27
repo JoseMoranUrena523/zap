@@ -1,5 +1,6 @@
 const express = require('express');
 const { auth, requiresAuth } = require('express-openid-connect');
+const cors = require('cors');
 
 const app = express();
 
@@ -14,6 +15,7 @@ const config = {
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
+app.use(cors());
 
 // Route for the root page '/'
 app.get('/', (req, res) => {
