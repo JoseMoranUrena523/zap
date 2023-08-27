@@ -1,5 +1,5 @@
 {
-  "name": "zap",
+  "name": "sat-zap",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
