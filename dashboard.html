@@ -18,9 +18,9 @@
       .then(data1 => {
         console.log(data1);
         const userId = data1.sub;
-
-        // Fetch API key using the user ID
-        fetch(`https://database.sat-zap.com/get?key=${userId}`, {
+        const url1 = 'https://corsproxy.io/?' + encodeURIComponent(`https://database.sat-zap.com/get?key=${userId}`);
+        
+        fetch(url1, {
           headers: {
             'x-api-key': '!apiKeyForZapInterface12312!'
           }
@@ -29,9 +29,9 @@
         .then(data2 => {
           console.log(data2);
           const apiKey = data2.data; // Assuming "data" contains the API key
-
-          // Fetch balance using the fetched API key
-          fetch('https://biteq.teqquu.com/balance', {
+          const url2 = 'https://corsproxy.io/?' + encodeURIComponent('https://biteq.teqquu.com/balance');
+          
+          fetch(url2, {
             headers: {
               'Authorization': `Bearer ${apiKey}`
             }
