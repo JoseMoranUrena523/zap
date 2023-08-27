@@ -1,7 +1,3 @@
-body, html, .center-content {
-    height: 100%;
-}
-
 .center-content {
     display: flex;
     justify-content: center;
