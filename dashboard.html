@@ -25,10 +25,11 @@
         <label for="amount" class="form-label">Amount:</label>
         <input type="number" class="form-control" id="amount" name="amount" required>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
       <br>
       <p class="error-message" id="insufficientBalanceMessage" style="display: none;">Insufficient balance.</p>
       <p class="error-message" id="fetchRequestMessage" style="display: none;">Request failed.</p>
+      <p class="error-message" id="routingFeeMessage" style="display: none;">You need to reserve some sats for potential routing fees.</p>
       <p id="successMessage" style="display: none;">Success!</p>
     </form>
   </div>
@@ -69,6 +70,7 @@
   <script>
     document.getElementById('paymentForm').addEventListener('submit', function(event) {
       event.preventDefault();
+      document.getElementById('submitBtn').disabled = true;
       
       const lightningAddress = document.getElementById('address').value;
       const paymentAmount = parseFloat(document.getElementById('amount').value);
@@ -100,8 +102,12 @@
         fetch('https://biteq.teqquu.com/pay-address', requestOptions)
           .then(response => response.json())
           .then(paymentResponse => {
-            console.log(paymentResponse);
+            if (!paymentResponse.detail === null) {
+              return document.getElementById("routingFeeMessage").style.display = "block";
+            }
             document.getElementById("successMessage").style.display = "block";
+            alert(`Your payment has been completed! Payment Hash: ${paymentResponse.payment_hash}`);
+            window.location.reload();
           })
           .catch(error => document.getElementById("fetchRequestMessage").style.display = "block");
       }
