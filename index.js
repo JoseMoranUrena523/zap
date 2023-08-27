@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/lightning-bolt', (req, res) => {
-  res.sendFile(__dirname + '/lightning-bolt.jpg');
+  res.sendFile(__dirname + '/lightning-bolt-removebg-preview.png');
 });
 
 // Protected route for the profile page
