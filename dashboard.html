@@ -82,7 +82,7 @@
     if (paymentAmount >= currentBalance) {
       console.log("Insufficient balance");
       document.getElementById('insufficientBalanceMessage').style.display = 'block';
-      document.getElementById("successBtn").disabled = false;
+      document.getElementById("submitBtn").disabled = false;
       console.log("Success button enabled");
     } else {
       console.log("Sufficient balance");
@@ -117,7 +117,7 @@
         if (/[a-zA-Z]/.test(paymentResponse.detail)) {
           console.log("Routing fee message");
           document.getElementById("routingFeeMessage").style.display = "block";
-          document.getElementById("successBtn").disabled = false;
+          document.getElementById("submitBtn").disabled = false;
           console.log("Success button enabled");
         } else {
           console.log("Payment successful");
@@ -129,7 +129,7 @@
       .catch(error => {
         console.log("Fetch error:", error);
         document.getElementById("fetchRequestMessage").style.display = "block";
-        document.getElementById("successBtn").disabled = false;
+        document.getElementById("submitBtn").disabled = false;
         console.log("Success button enabled");
       });
     }
