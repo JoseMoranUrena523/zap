@@ -7,7 +7,7 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: 'zap-secretive-secret-that-no-one-knows-haha',
-  baseURL: 'https://goldfish-app-nusxd.ondigitalocean.app',
+  baseURL: 'https://sat-zap.com',
   clientID: 'zrsJruo4diUxQLhJ2iBti3mBPZH1ioRn',
   issuerBaseURL: 'https://zap-lightning.us.auth0.com'
 };
