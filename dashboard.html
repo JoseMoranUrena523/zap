@@ -16,6 +16,7 @@
     fetch('/profile')
       .then(response => response.json())
       .then(data1 => {
+        console.log(data1);
         const userId = data1.sub;
 
         // Fetch API key using the user ID
@@ -26,6 +27,7 @@
         })
         .then(response => response.json())
         .then(data2 => {
+          console.log(data2);
           const apiKey = data2.data; // Assuming "data" contains the API key
 
           // Fetch balance using the fetched API key
@@ -36,6 +38,7 @@
           })
           .then(response => response.json())
           .then(data3 => {
+            console.log(data3);
             const balanceAmount = data3.amount;
             document.getElementById('balance').textContent = balanceAmount;
           })
