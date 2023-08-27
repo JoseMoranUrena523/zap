@@ -13,9 +13,14 @@ const config = {
   issuerBaseURL: 'https://zap-lightning.us.auth0.com'
 };
 
+var corsOptions = {
+    origin: '*',
+    credentials: true 
+};
+
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Route for the root page '/'
 app.get('/', (req, res) => {
