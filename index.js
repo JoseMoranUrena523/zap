@@ -24,6 +24,10 @@ app.get('/', (req, res) => {
   }
 });
 
+app.get('/lightning-bolt', (req, res) => {
+  res.sendFile(__dirname + '/lightning-bolt.jpg');
+});
+
 // Protected route for the profile page
 app.get('/profile', requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));
