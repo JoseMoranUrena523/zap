@@ -26,6 +26,7 @@
         <input type="number" class="form-control" id="amount" name="amount" required>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
+      <br>
       <p class="error-message" id="insufficientBalanceMessage" style="display: none;">Insufficient balance.</p>
       <p class="error-message" id="fetchRequestMessage" style="display: none;">Request failed.</p>
       <p id="successMessage" style="display: none;">Success!</p>
@@ -98,6 +99,7 @@
         fetch('https://biteq.teqquu.com/pay-address', requestOptions)
           .then(response => response.json())
           .then(paymentResponse => {
+            console.log(paymentResponse);
             document.getElementById("successMessage").style.display = "block";
           })
           .catch(error => document.getElementById("fetchRequestMessage").style.display = "block");
