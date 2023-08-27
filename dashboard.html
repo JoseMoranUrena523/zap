@@ -76,8 +76,9 @@
       const paymentAmount = parseFloat(document.getElementById('amount').value);
       const currentBalance = parseFloat(document.getElementById('balance').textContent);
 
-      if (paymentAmount > currentBalance) {
+      if (paymentAmount >= currentBalance) {
         document.getElementById('insufficientBalanceMessage').style.display = 'block';
+        document.getElementById("successBtn").disabled = false;
       } else {
         document.getElementById('insufficientBalanceMessage').style.display = 'none';
         const storedApiKey = window.localStorage.getItem('api_key');
@@ -111,7 +112,10 @@
             window.location.reload();
           }
         })
-        .catch(error => document.getElementById("fetchRequestMessage").style.display = "block");
+        .catch(error => {
+          document.getElementById("fetchRequestMessage").style.display = "block";
+          document.getElementById("successBtn").disabled = false;
+        });
       }
     });
   </script>
