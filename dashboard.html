@@ -27,7 +27,6 @@
         })
         .then(response => response.json())
         .then(data2 => {
-          console.log(data2);
           const apiKey = data2.data; // Assuming "data" contains the API key
           const url2 = 'https://corsproxy.io/?' + encodeURIComponent('https://biteq.teqquu.com/balance');
           
@@ -38,8 +37,7 @@
           })
           .then(response => response.json())
           .then(data3 => {
-            console.log(data3);
-            const balanceAmount = data3.amount;
+            const balanceAmount = data3.balance;
             document.getElementById('balance').textContent = balanceAmount;
           })
           .catch(error => console.error('Error fetching balance:', error));
