@@ -73,60 +73,75 @@
     document.getElementById('paymentForm').addEventListener('submit', function(event) {
       event.preventDefault();
       document.getElementById('submitBtn').disabled = true;
-    
-      // Reset error messages
+  
       document.getElementById('insufficientBalanceMessage').style.display = 'none';
       document.getElementById('fetchRequestMessage').style.display = 'none';
       document.getElementById('routingFeeMessage').style.display = 'none';
-
+  
       const lightningAddress = document.getElementById('address').value;
       const paymentAmount = parseFloat(document.getElementById('amount').value);
       const currentBalance = parseFloat(document.getElementById('balance').textContent);
-
+  
       if (paymentAmount >= currentBalance) {
         document.getElementById('insufficientBalanceMessage').style.display = 'block';
         document.getElementById("submitBtn").disabled = false;
       } else {
         document.getElementById('insufficientBalanceMessage').style.display = 'none';
-    
+  
         const storedApiKey = window.localStorage.getItem('api_key');
         const paymentData = {
           address: lightningAddress,
           amount: paymentAmount,
           comment: "Payment from sat-zap.com"
         };
-    
+  
         const headers = {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${storedApiKey}`
         };
-    
+  
         const requestOptions = {
           method: 'POST',
           headers: headers,
           body: JSON.stringify(paymentData)
         };
-        
+  
         fetch('https://biteq.teqquu.com/pay-address', requestOptions)
-        .then(response => {
-          return response.json();
-        })
-        .then(paymentResponse => {
-          if (paymentResponse.detail.includes("reserve")) {
-            document.getElementById("routingFeeMessage").style.display = "block";
-            document.getElementById("submitBtn").disabled = false;
-          } else if (paymentResponse.success === false) {
+          .then(response => {
+            return response.json();
+          })
+          .then(paymentResponse => {
+            if (paymentResponse.payment_hash) {
+              const successOverlay = document.createElement("div");
+              successOverlay.classList.add("success-overlay");
+              successOverlay.innerHTML = `
+                <div class="success-modal">
+                  <p>Your payment has been completed!</p>
+                  <p>Payment Hash: ${paymentResponse.payment_hash}</p>
+                  <button id="closeOverlayBtn">Close</button>
+                </div>
+              `;
+              document.body.appendChild(successOverlay);
+  
+              document.body.style.pointerEvents = "none";
+  
+              const closeOverlayBtn = document.getElementById("closeOverlayBtn");
+              closeOverlayBtn.addEventListener("click", () => {
+                document.body.removeChild(successOverlay);
+                document.body.style.pointerEvents = "auto";
+                location.reload();
+              });
+            } else if (paymentResponse.detail.includes("reserve")) {
+              document.getElementById("routingFeeMessage").style.display = "block";
+              document.getElementById("submitBtn").disabled = false;
+            } else if (paymentResponse.success === false) {
+              document.getElementById("fetchRequestMessage").style.display = "block";
+            }
+          })
+          .catch(error => {
             document.getElementById("fetchRequestMessage").style.display = "block";
-          } else if (/[a-zA-Z0-9]/.test(paymentResponse.payment_hash)) {
-            document.getElementById("successMessage").style.display = "block";
-            alert(`Your payment has been completed! Payment Hash: ${paymentResponse.payment_hash}`);
-            window.location.reload();
-          }
-        })
-        .catch(error => {
-          document.getElementById("fetchRequestMessage").style.display = "block";
-          document.getElementById("submitBtn").disabled = false;
-        });
+            document.getElementById("submitBtn").disabled = false;
+          });
       }
     });
   </script>
