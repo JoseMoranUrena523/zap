@@ -192,11 +192,6 @@
     });
   </script>
   <script>
-  function formatBalance(balance) {
-    const formattedBalance = balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return `${formattedBalance} sats`;
-  }
-  
   function openBalanceModal() {
     const balanceModal = document.createElement("div");
     balanceModal.classList.add("overlay");
@@ -205,7 +200,7 @@
         <h1>Settings</h1>
         <br>
         <p>Current Balance:</p>
-        <p id="modalBalance">${formatBalance(document.getElementById("balance").textContent)}</p>
+        <p id="modalBalance">${document.getElementById("balance").textContent}</p>
         <button id="depositBtn">Deposit</button>
         <button id="withdrawBtn">Withdraw</button>
         <br><br>
