@@ -336,7 +336,7 @@
     const withdrawForm = withdrawFormModal.querySelector("#withdrawForm");
     withdrawForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      document.getElementById("depositSubmitButton").disabled = true;
+      document.getElementById("withdrawSubmitButton").disabled = true;
 
       const invoice = document.getElementById("invoice").value;
       const withdrawResult = withdrawFormModal.querySelector("#withdrawResult");
