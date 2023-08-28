@@ -73,7 +73,6 @@
     document.getElementById('paymentForm').addEventListener('submit', function(event) {
       event.preventDefault();
       document.getElementById('submitBtn').disabled = true;
-      document.getElementById('messageContainer').style.display = 'none';
     
       const lightningAddress = document.getElementById('address').value;
       const paymentAmount = parseFloat(document.getElementById('amount').value);
