@@ -49,7 +49,7 @@ app.get('/get-item', (req, res) => {
   .then(responseJson => {
     res.json(responseJson);
   })
-  .catch(error => res.send('Error fetching user data:', error));
+  .catch(error => res.status(200).send('Error fetching user data: ' + error));
 });
 
 app.listen(8080, () => {
