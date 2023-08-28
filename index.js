@@ -49,11 +49,14 @@ app.get('/get-item', (req, res) => {
       'x-api-key': '!apiKeyForZapInterface12312!'
     }
   })
-  .then(response => console.log(response))
+  .then(response => response.json())
   .then(responseJson => {
     res.json(responseJson);
   })
-  .catch(error => console.log(error));
+  .catch(error => {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  });
 });
 
 app.listen(8080, () => {
