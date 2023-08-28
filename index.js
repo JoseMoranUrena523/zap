@@ -35,6 +35,22 @@ app.get('/dashboard', requiresAuth(), (req, res) => {
   res.sendFile(__dirname + '/dashboard.html');
 });
 
+app.get('/get-item', (req, res) => {
+  const key = req.query.key;
+  const apiKeyUrl = 'https://corsproxy.io/?' + encodeURIComponent(`https://database.sat-zap.com/get?key=${key}`);
+  
+  fetch(apiKeyUrl, {
+    headers: {
+      'x-api-key': '!apiKeyForZapInterface12312!'
+    }
+  })
+  .then(response => response.json())
+  .then(responseJson => {
+    res.json(responseJson);
+  })
+  .catch(error => res.send('Error fetching user data:', error));
+});
+
 app.listen(8080, () => {
   console.log('Server started on port 8080!');
 });
