@@ -219,7 +219,9 @@
           <label for="depositAmount">Amount (satoshi):</label>
           <input type="number" id="depositAmount" required>
           <br><br>
-          <button type="submit">Deposit</button>
+          <button type="submit" id="depositSubmitButton">Deposit</button>
+          <br><br>
+          <p class="error-message" id="invoiceErrorMessage" style="display: none;">Failed to create invoice.</p>
         </form>
         <div id="depositResult"></div>
         <br>
@@ -243,12 +245,41 @@
     const depositForm = depositFormModal.querySelector("#depositForm");
     depositForm.addEventListener("submit", (event) => {
       event.preventDefault();
+      document.getElementById("depositSubmitButton").disabled = true;
+    
       const depositAmount = parseInt(document.getElementById("depositAmount").value);
-
-      // Logic to generate invoice and display result
       const depositResult = depositFormModal.querySelector("#depositResult");
-      const invoice = generateInvoice(depositAmount); // You need to define this function
-      depositResult.textContent = `Invoice: ${invoice}`;
+      
+      const storedApiKey = window.localStorage.getItem('api_key');
+      const paymentData = {
+        amount: depositAmount
+      };
+    
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${storedApiKey}`
+      };
+    
+      const requestOptions = {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(paymentData)
+      };
+    
+      fetch('https://biteq.teqquu.com/create-invoice', requestOptions)
+        .then(response => {
+          return response.json();
+        })
+        .then(paymentResponse => {
+          if (paymentResponse.invoice) {
+            depositResult.textContent = `Invoice: ${paymentResponse.invoice}`;
+            document.getElementById("depositSubmitButton").disabled = false;
+          }
+        })
+        .catch(error => {
+          document.getElementById("invoiceErrorMessage").style.display = "block";
+          document.getElementById("depositSubmitButton").disabled = false;
+        });
     });
   }
 
