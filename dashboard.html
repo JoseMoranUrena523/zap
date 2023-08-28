@@ -314,7 +314,6 @@
           <br><br>
           <p class="error-message" id="withdrawErrorMessage" style="display: none;">Failed to pay invoice.</p>
         </form>
-        <div id="withdrawResult"></div>
         <br>
         <button id="backToBalanceBtn">Back</button>
         <button id="closeWithdrawBtn">Close</button>
@@ -339,7 +338,6 @@
       document.getElementById("withdrawSubmitButton").disabled = true;
 
       const invoice = document.getElementById("invoice").value;
-      const withdrawResult = withdrawFormModal.querySelector("#withdrawResult");
       
       const storedApiKey = window.localStorage.getItem('api_key');
       const paymentData = {
@@ -363,8 +361,23 @@
       })
       .then(paymentResponse => {
         if (paymentResponse.payment_hash) {
-          withdrawResult.textContent = `Your payment has been processed! Payment Hash: ${paymentResponse.payment_hash}`;
-          document.getElementById("withdrawSubmitButton").disabled = false;
+          const overlay = document.createElement("div");
+          overlay.classList.add("overlay");
+          overlay.innerHTML = `
+            <div class="success-modal">
+              <p>Your payment has been completed!</p>
+              <p>Payment Hash:</p>
+              <p>${paymentResponse.payment_hash}</p>
+              <button id="closeOverlayBtn">Close</button>
+            </div>
+          `;
+          document.body.appendChild(overlay);
+          
+          const closeOverlayBtn = overlay.querySelector("#closeOverlayBtn");
+          closeOverlayBtn.addEventListener("click", () => {
+            document.body.removeChild(overlay);
+            location.reload();
+          });
         }
       })
       .catch(error => {
