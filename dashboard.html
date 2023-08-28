@@ -228,7 +228,6 @@
     });
   }
 
-  // Function to show the deposit form
   function openDepositForm() {
     const depositFormModal = document.createElement("div");
     depositFormModal.classList.add("overlay");
@@ -261,7 +260,7 @@
     const backToBalanceBtn = depositFormModal.querySelector("#backToBalanceBtn");
     backToBalanceBtn.addEventListener("click", () => {
       document.body.removeChild(depositFormModal);
-      openBalanceModal(); // Reopen the balance modal
+      openBalanceModal();
     });
 
     const depositForm = depositFormModal.querySelector("#depositForm");
@@ -305,7 +304,6 @@
     });
   }
 
-  // Function to show the withdraw form
   function openWithdrawForm() {
     const withdrawFormModal = document.createElement("div");
     withdrawFormModal.classList.add("overlay");
@@ -337,7 +335,7 @@
     const backToBalanceBtn = withdrawFormModal.querySelector("#backToBalanceBtn");
     backToBalanceBtn.addEventListener("click", () => {
       document.body.removeChild(withdrawFormModal);
-      openBalanceModal(); // Reopen the balance modal
+      openBalanceModal();
     });
 
     const withdrawForm = withdrawFormModal.querySelector("#withdrawForm");
@@ -346,14 +344,12 @@
       const withdrawAddress = document.getElementById("withdrawAddress").value;
       const withdrawAmount = parseInt(document.getElementById("withdrawAmount").value);
 
-      // Logic to process withdrawal and display result
       const withdrawResult = withdrawFormModal.querySelector("#withdrawResult");
-      const withdrawalStatus = processWithdrawal(withdrawAddress, withdrawAmount); // You need to define this function
+      const withdrawalStatus = processWithdrawal(withdrawAddress, withdrawAmount);
       withdrawResult.textContent = withdrawalStatus;
     });
   }
 
-  // Add event listener to the balance element
   const balanceElement = document.getElementById("balanceText");
   balanceElement.addEventListener("click", openBalanceModal);
 </script>
