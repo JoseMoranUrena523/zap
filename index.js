@@ -36,6 +36,10 @@ app.get('/dashboard', requiresAuth(), (req, res) => {
   res.sendFile(__dirname + '/dashboard.html');
 });
 
+app.get('/privacy-policy', (req, res) => {
+  res.sendFile(__dirname + 'privacy-policy.html');
+});
+
 app.get('/get-item', (req, res) => {
   const key = req.query.key;
   const apiKeyUrl = 'https://corsproxy.io/?' + encodeURIComponent(`https://database.sat-zap.com/get?key=${key}`);
@@ -47,10 +51,9 @@ app.get('/get-item', (req, res) => {
   })
   .then(response => response.json())
   .then(responseJson => {
-    console.error(responseJson);
     res.json(responseJson);
   })
-  .catch(error => res.status(200).send('Error fetching user data: ' + error));
+  .catch(error => console.log(error));
 });
 
 app.listen(8080, () => {
