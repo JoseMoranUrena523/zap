@@ -125,6 +125,7 @@
         })
         .catch(error => {
           document.getElementById("fetchRequestMessage").style.display = "block";
+          document.getElementById("submitBtn").disabled = false;
         });
       }
     });
