@@ -312,13 +312,15 @@
         <h2>Withdraw</h2>
         <br>
         <form id="withdrawForm">
-          <label for="withdrawAddress">Lightning Address:</label>
-          <input type="text" id="withdrawAddress" required>
+          <label for="withdrawAddress">Invoice:</label>
+          <input type="text" id="invoice" required>
           <br><br>
           <label for="withdrawAmount">Amount (satoshi):</label>
           <input type="number" id="withdrawAmount" required>
           <br><br>
-          <button type="submit">Withdraw</button>
+          <button type="submit" id="withdrawSubmitButton">Withdraw</button>
+          <br><br>
+          <p class="error-message" id="withdrawErrorMessage" style="display: none;">Failed to pay invoice.</p>
         </form>
         <div id="withdrawResult"></div>
         <br>
@@ -342,12 +344,42 @@
     const withdrawForm = withdrawFormModal.querySelector("#withdrawForm");
     withdrawForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      const withdrawAddress = document.getElementById("withdrawAddress").value;
-      const withdrawAmount = parseInt(document.getElementById("withdrawAmount").value);
+      document.getElementById("depositSubmitButton").disabled = true;
 
+      const invoice = document.getElementById("invoice").value;
+      const withdrawAmount = parseInt(document.getElementById("withdrawAmount").value);
       const withdrawResult = withdrawFormModal.querySelector("#withdrawResult");
-      const withdrawalStatus = processWithdrawal(withdrawAddress, withdrawAmount);
-      withdrawResult.textContent = withdrawalStatus;
+      
+      const storedApiKey = window.localStorage.getItem('api_key');
+      const paymentData = {
+        invoice: invoice
+      };
+    
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${storedApiKey}`
+      };
+    
+      const requestOptions = {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(paymentData)
+      };
+    
+      fetch('https://biteq.teqquu.com/pay-invoice', requestOptions)
+      .then(response => {
+        return response.json();
+      })
+      .then(paymentResponse => {
+        if (paymentResponse.payment_hash) {
+          withdrawResult.textContent = `Your payment has been processed! Payment Hash: ${paymentResponse.payment_hash}`;
+          document.getElementById("withdrawSubmitButton").disabled = false;
+        }
+      })
+      .catch(error => {
+        document.getElementById("withdrawErrorMessage").style.display = "block";
+        document.getElementById("depositSubmitButton").disabled = false;
+      });
     });
   }
 
