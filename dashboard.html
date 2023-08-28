@@ -148,7 +148,6 @@
                   <div class="success-modal">
                       <p>Your payment has been completed!</p>
                       <p>Payment Hash:</p>
-                      <br>
                       <p>${paymentResponse.payment_hash}</p>
                       <button id="closeOverlayBtn">Close</button>
                   </div>
@@ -175,29 +174,135 @@
     });
   </script>
   <script>
-    // Function to show the modal
-    function openBalanceModal() {
-      const balanceModal = document.createElement("div");
-      balanceModal.classList.add("overlay");
-      balanceModal.innerHTML = `
-        <div class="success-modal">
-          <p>Your current balance:</p>
-          <p id="modalBalance">${document.getElementById("balance").textContent}</p>
-          <button id="closeModalBtn">Close</button>
-        </div>
-      `;
-      document.body.appendChild(balanceModal);
-  
-      const closeModalBtn = balanceModal.querySelector("#closeModalBtn");
-      closeModalBtn.addEventListener("click", () => {
-        document.body.removeChild(balanceModal);
-      });
-    }
-  
-    // Add event listener to the balance element
-    const balanceElement = document.getElementById("balanceText");
-    balanceElement.addEventListener("click", openBalanceModal);
-  </script>
+  // Function to show the balance modal
+  function openBalanceModal() {
+    const balanceModal = document.createElement("div");
+    balanceModal.classList.add("overlay");
+    balanceModal.innerHTML = `
+      <div class="success-modal">
+        <p>Your current balance:</p>
+        <p id="modalBalance">${document.getElementById("balance").textContent}</p>
+        <button id="depositBtn">Deposit</button>
+        <button id="withdrawBtn">Withdraw</button>
+        <br>
+        <button id="closeModalBtn">Close</button>
+      </div>
+    `;
+    document.body.appendChild(balanceModal);
+
+    const closeModalBtn = balanceModal.querySelector("#closeModalBtn");
+    closeModalBtn.addEventListener("click", () => {
+      document.body.removeChild(balanceModal);
+    });
+
+    const depositBtn = balanceModal.querySelector("#depositBtn");
+    depositBtn.addEventListener("click", () => {
+      document.body.removeChild(balanceModal);
+      openDepositForm();
+    });
+
+    const withdrawBtn = balanceModal.querySelector("#withdrawBtn");
+    withdrawBtn.addEventListener("click", () => {
+      document.body.removeChild(balanceModal);
+      openWithdrawForm();
+    });
+  }
+
+  // Function to show the deposit form
+  function openDepositForm() {
+    const depositFormModal = document.createElement("div");
+    depositFormModal.classList.add("overlay");
+    depositFormModal.innerHTML = `
+      <div class="success-modal">
+        <h2>Deposit</h2>
+        <form id="depositForm">
+          <label for="depositAmount">Amount (satoshi):</label>
+          <input type="number" id="depositAmount" required>
+          <button type="submit">Deposit</button>
+        </form>
+        <div id="depositResult"></div>
+        <br>
+        <button id="backToBalanceBtn">Back</button>
+        <button id="closeDepositBtn">Close</button>
+      </div>
+    `;
+    document.body.appendChild(depositFormModal);
+
+    const closeDepositBtn = depositFormModal.querySelector("#closeDepositBtn");
+    closeDepositBtn.addEventListener("click", () => {
+      document.body.removeChild(depositFormModal);
+      openBalanceModal(); // Reopen the balance modal
+    });
+
+    const backToBalanceBtn = depositFormModal.querySelector("#backToBalanceBtn");
+    backToBalanceBtn.addEventListener("click", () => {
+      document.body.removeChild(depositFormModal);
+      openBalanceModal(); // Reopen the balance modal
+    });
+
+    const depositForm = depositFormModal.querySelector("#depositForm");
+    depositForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const depositAmount = parseInt(document.getElementById("depositAmount").value);
+
+      // Logic to generate invoice and display result
+      const depositResult = depositFormModal.querySelector("#depositResult");
+      const invoice = generateInvoice(depositAmount); // You need to define this function
+      depositResult.textContent = `Invoice: ${invoice}`;
+    });
+  }
+
+  // Function to show the withdraw form
+  function openWithdrawForm() {
+    const withdrawFormModal = document.createElement("div");
+    withdrawFormModal.classList.add("overlay");
+    withdrawFormModal.innerHTML = `
+      <div class="success-modal">
+        <h2>Withdraw</h2>
+        <form id="withdrawForm">
+          <label for="withdrawAddress">Lightning Address:</label>
+          <input type="text" id="withdrawAddress" required>
+          <label for="withdrawAmount">Amount (satoshi):</label>
+          <input type="number" id="withdrawAmount" required>
+          <button type="submit">Withdraw</button>
+        </form>
+        <div id="withdrawResult"></div>
+        <br>
+        <button id="backToBalanceBtn">Back</button>
+        <button id="closeWithdrawBtn">Close</button>
+      </div>
+    `;
+    document.body.appendChild(withdrawFormModal);
+
+    const closeWithdrawBtn = withdrawFormModal.querySelector("#closeWithdrawBtn");
+    closeWithdrawBtn.addEventListener("click", () => {
+      document.body.removeChild(withdrawFormModal);
+      openBalanceModal(); // Reopen the balance modal
+    });
+
+    const backToBalanceBtn = withdrawFormModal.querySelector("#backToBalanceBtn");
+    backToBalanceBtn.addEventListener("click", () => {
+      document.body.removeChild(withdrawFormModal);
+      openBalanceModal(); // Reopen the balance modal
+    });
+
+    const withdrawForm = withdrawFormModal.querySelector("#withdrawForm");
+    withdrawForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const withdrawAddress = document.getElementById("withdrawAddress").value;
+      const withdrawAmount = parseInt(document.getElementById("withdrawAmount").value);
+
+      // Logic to process withdrawal and display result
+      const withdrawResult = withdrawFormModal.querySelector("#withdrawResult");
+      const withdrawalStatus = processWithdrawal(withdrawAddress, withdrawAmount); // You need to define this function
+      withdrawResult.textContent = withdrawalStatus;
+    });
+  }
+
+  // Add event listener to the balance element
+  const balanceElement = document.getElementById("balance");
+  balanceElement.addEventListener("click", openBalanceModal);
+</script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>
