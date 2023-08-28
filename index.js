@@ -47,7 +47,7 @@ app.get('/get-item', (req, res) => {
   })
   .then(response => response.json())
   .then(responseJson => {
-    console.log(responseJson);
+    console.error(responseJson);
     res.json(responseJson);
   })
   .catch(error => res.status(200).send('Error fetching user data: ' + error));
