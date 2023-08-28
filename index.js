@@ -37,7 +37,7 @@ app.get('/dashboard', requiresAuth(), (req, res) => {
 });
 
 app.get('/privacy-policy', (req, res) => {
-  res.sendFile(__dirname + 'privacy-policy.html');
+  res.sendFile(__dirname + '/privacy-policy.html');
 });
 
 app.get('/get-item', (req, res) => {
@@ -51,6 +51,7 @@ app.get('/get-item', (req, res) => {
   })
   .then(response => response.json())
   .then(responseJson => {
+    console.log(responseJson);
     res.json(responseJson);
   })
   .catch(error => console.log(error));
