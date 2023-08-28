@@ -78,6 +78,11 @@
     </form>
   </div>
   <script>
+    function formatBalance(balance) {
+      const formattedBalance = balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return `${formattedBalance} sats`;
+    }
+    
     fetch('/profile')
       .then(response => response.json())
       .then(userData => {
@@ -103,7 +108,8 @@
           .then(response => response.json())
           .then(balanceData => {
             const balanceAmount = balanceData.balance;
-            document.getElementById('balance').textContent = balanceAmount;
+            const formattedBalance = formatBalance(balanceAmount);
+            document.getElementById('balance').textContent = formattedBalance;
           })
           .catch(error => console.error('Error fetching balance:', error));
         })
@@ -129,7 +135,7 @@
         document.getElementById("submitBtn").disabled = false;
       } else {
         document.getElementById('insufficientBalanceMessage').style.display = 'none';
-  
+        
         const storedApiKey = window.localStorage.getItem('api_key');
         const paymentData = {
           address: lightningAddress,
@@ -186,7 +192,11 @@
     });
   </script>
   <script>
-  // Function to show the balance modal
+  function formatBalance(balance) {
+    const formattedBalance = balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return `${formattedBalance} sats`;
+  }
+  
   function openBalanceModal() {
     const balanceModal = document.createElement("div");
     balanceModal.classList.add("overlay");
@@ -195,7 +205,7 @@
         <h1>Settings</h1>
         <br>
         <p>Current Balance:</p>
-        <p id="modalBalance">${document.getElementById("balance").textContent}</p>
+        <p id="modalBalance">${formatBalance(document.getElementById("balance").textContent)}</p>
         <button id="depositBtn">Deposit</button>
         <button id="withdrawBtn">Withdraw</button>
         <br><br>
