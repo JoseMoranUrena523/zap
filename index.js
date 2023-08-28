@@ -1,5 +1,6 @@
 const express = require('express');
 const { auth, requiresAuth } = require('express-openid-connect');
+const fetch = require('node-fetch');
 
 const app = express();
 
