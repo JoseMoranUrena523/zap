@@ -38,6 +38,7 @@ app.get('/dashboard', requiresAuth(), (req, res) => {
 
 app.get('/get-item', (req, res) => {
   const key = req.query.key;
+  console.log(key);
   const apiKeyUrl = 'https://corsproxy.io/?' + encodeURIComponent(`https://database.sat-zap.com/get?key=${key}`);
   
   fetch(apiKeyUrl, {
