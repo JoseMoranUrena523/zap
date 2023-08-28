@@ -83,6 +83,8 @@
       const paymentAmount = parseFloat(document.getElementById('amount').value);
       const currentBalance = parseFloat(document.getElementById('balance').textContent);
 
+      if (typeof paymentAmount !== integer) return document.getElementById('submitBtn').disabled = false;
+
       if (paymentAmount >= currentBalance) {
         document.getElementById('insufficientBalanceMessage').style.display = 'block';
         document.getElementById("submitBtn").disabled = false;
@@ -117,7 +119,7 @@
             document.getElementById("submitBtn").disabled = false;
           } else if (paymentResponse.success === false) {
             document.getElementById("fetchRequestMessage").style.display = "block";
-          } else if (paymentResponse.payment_hash !== null || paymentResponse.payment_hash !== undefined) {
+          } else if (/\d/.test(paymentResponse.payment_hash)) {
             document.getElementById("successMessage").style.display = "block";
             alert(`Your payment has been completed! Payment Hash: ${paymentResponse.payment_hash}`);
             window.location.reload();
