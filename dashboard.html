@@ -54,6 +54,8 @@
 <body class="d-flex min-vh-100 justify-content-center align-items-center p-4">
   <div class="text-center">
     <h1>Welcome to SAT ZAP!</h1>
+    <br>
+    <p>Click on the balance text to open your settings menu!</p>
     <br><br>
     <p class="position-absolute top-0 end-0 mt-2 me-2" id="balanceText">Balance: <span id="balance">Loading...</span></p>
     <form id="paymentForm">
@@ -190,12 +192,15 @@
     balanceModal.classList.add("overlay");
     balanceModal.innerHTML = `
       <div class="success-modal">
-        <p>Your current balance:</p>
+        <h1>Settings</h1>
+        <br>
+        <p>Current Balance:</p>
         <p id="modalBalance">${document.getElementById("balance").textContent}</p>
         <button id="depositBtn">Deposit</button>
         <button id="withdrawBtn">Withdraw</button>
         <br><br>
         <button id="closeModalBtn">Close</button>
+        <a href="/logout"><button>Logout</button></a>
       </div>
     `;
     document.body.appendChild(balanceModal);
