@@ -136,7 +136,9 @@
               overlay.innerHTML = `
                   <div class="success-modal">
                       <p>Your payment has been completed!</p>
-                      <p>Payment Hash: ${paymentResponse.payment_hash}</p>
+                      <p>Payment Hash:</p>
+                      <br>
+                      <p>${paymentResponse.payment_hash}</p>
                       <button id="closeOverlayBtn">Close</button>
                   </div>
               `;
