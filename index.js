@@ -49,9 +49,8 @@ app.get('/get-item', (req, res) => {
       'x-api-key': '!apiKeyForZapInterface12312!'
     }
   })
-  .then(response => response.json())
+  .then(response => console.log(response))
   .then(responseJson => {
-    console.log(responseJson);
     res.json(responseJson);
   })
   .catch(error => console.log(error));
