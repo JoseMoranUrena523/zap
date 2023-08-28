@@ -23,6 +23,10 @@ app.get('/', (req, res) => {
   }
 });
 
+app.get('/support', (req, res) => {
+  res.redirect("mailto:support@sat-zap.com");
+});
+
 app.get('/profile', requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));
 });
