@@ -12,8 +12,8 @@ const config = {
   issuerBaseURL: 'https://zap-lightning.us.auth0.com'
 };
 
+app.use(express.static('/public'));
 app.use(auth(config));
-app.use(express.static('public'));
 
 app.get('/', (req, res) => {
   if (req.oidc.isAuthenticated()) {
