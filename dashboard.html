@@ -74,10 +74,15 @@
       event.preventDefault();
       document.getElementById('submitBtn').disabled = true;
     
+      // Reset error messages
+      document.getElementById('insufficientBalanceMessage').style.display = 'none';
+      document.getElementById('fetchRequestMessage').style.display = 'none';
+      document.getElementById('routingFeeMessage').style.display = 'none';
+
       const lightningAddress = document.getElementById('address').value;
       const paymentAmount = parseFloat(document.getElementById('amount').value);
       const currentBalance = parseFloat(document.getElementById('balance').textContent);
-    
+
       if (paymentAmount >= currentBalance) {
         document.getElementById('insufficientBalanceMessage').style.display = 'block';
         document.getElementById("submitBtn").disabled = false;
