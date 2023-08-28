@@ -38,9 +38,6 @@
       padding: 20px;
       border-radius: 10px;
       text-align: center;
-    }
-    
-    .depositFormModal {
       max-height: 80vh;
       overflow-y: auto;
     }
@@ -218,7 +215,7 @@
     const depositFormModal = document.createElement("div");
     depositFormModal.classList.add("overlay");
     depositFormModal.innerHTML = `
-      <div class="success-modal" id="depositFormModal">
+      <div class="success-modal">
         <h2>Deposit</h2>
         <form id="depositForm">
           <label for="depositAmount">Amount (satoshi):</label>
