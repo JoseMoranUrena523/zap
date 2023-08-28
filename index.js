@@ -12,8 +12,8 @@ const config = {
   issuerBaseURL: 'https://zap-lightning.us.auth0.com'
 };
 
-// auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
+app.use(express.static('public'));
 
 // Route for the root page '/'
 app.get('/', (req, res) => {
@@ -22,10 +22,6 @@ app.get('/', (req, res) => {
   } else {
     res.sendFile(__dirname + '/index.html');
   }
-});
-
-app.get('/lightning-bolt', (req, res) => {
-  res.sendFile(__dirname + '/lightning-bolt-removebg-preview.png');
 });
 
 // Protected route for the profile page
