@@ -92,6 +92,8 @@
         .then(response => response.json())
         .then(apiKeyData => {
           const apiKey = apiKeyData.data;
+          if (apiKey === undefined) return document.getElementById('balance').textContent = "Error";
+
           window.localStorage.setItem("api_key", apiKey);
           
           fetch('https://biteq.teqquu.com/balance', {
