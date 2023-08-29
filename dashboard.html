@@ -87,13 +87,11 @@
       .then(response => response.json())
       .then(userData => {
         const userId = userData.sub;
-        console.log(userId);
         
         fetch(`/get-item?key=${userId}`)
         .then(response => response.json())
         .then(apiKeyData => {
           const apiKey = apiKeyData.data;
-          console.log(apiKey);
           window.localStorage.setItem("api_key", apiKey);
           
           fetch('https://biteq.teqquu.com/balance', {
