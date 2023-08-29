@@ -93,9 +93,8 @@
         .then(apiKeyData => {
           const apiKey = apiKeyData.data;
           window.localStorage.setItem("api_key", apiKey);
-          const balanceUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://biteq.teqquu.com/balance');
           
-          fetch(balanceUrl, {
+          fetch('https://biteq.teqquu.com/balance', {
             headers: {
               'Authorization': `Bearer ${apiKey}`
             }
