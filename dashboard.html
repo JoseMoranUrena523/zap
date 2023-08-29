@@ -3,40 +3,61 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+  <link rel="manifest" href="/public/site.webmanifest">
+  <link rel="mask-icon" href="/public/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+  <meta name="apple-mobile-web-app-title" content="SAT ZAP">
+  <meta name="application-name" content="SAT ZAP">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="/public/browserconfig.xml">
+  <meta name="theme-color" content="#000000">
   <title>SAT ZAP</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   <style>
-    .error-message { color: red; }
-    .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; }
-    .success-modal { background-color: white; padding: 20px; border-radius: 10px; text-align: center; max-height: 80vh; max-width: 90%; overflow-y: auto; }
-    #depositResult { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    /* Top Navigation Bar */
-    .top-nav { display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; padding: 10px 20px; border-bottom: 1px solid #ccc; }
-    .logo img { width: 100px; }
-    .balance-container { display: flex; align-items: center; position: relative; }
-    .balance-oval { width: 100px; height: 50px; background-color: #f0f0f0; border-radius: 50%; position: absolute; top: 50%; left: -10px; transform: translateY(-50%); z-index: -1; }
-    /* Bottom Navigation Bar */
-    .bottom-nav { background-color: #000000; text-align: center; padding: 10px 0; }
-    .bottom-nav a { color: #ffffff; text-decoration: none; margin: 0 20px; }
-  </style>
+  .error-message {
+    color: red;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .success-modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-height: 80vh;
+    max-width: 90%;
+    overflow-y: auto;
+  }
+
+  /* Add this style for the invoice element */
+  #depositResult {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>
 </head>
 <body class="d-flex min-vh-100 justify-content-center align-items-center p-4">
-  <nav class="top-nav">
-    <div class="logo">
-      <img src="/public/logo.png" alt="SAT ZAP Logo">
-    </div>
-    <div class="balance-container">
-      <div class="balance-oval"></div>
-      <div class="balance">
-        <span id="balanceText">Balance: <span id="balance">Loading...</span></span>
-      </div>
-    </div>
-  </nav>
   <div class="text-center">
     <h1>Welcome to SAT ZAP!</h1>
     <br>
     <p>Click on the balance text to open your settings menu!</p>
     <br><br>
+    <p class="position-absolute top-0 end-0 mt-2 me-2" id="balanceText">Balance: <span id="balance">Loading...</span></p>
     <form id="paymentForm">
       <div class="mb-3">
         <label for="address" class="form-label">Lightning Address:</label>
@@ -56,9 +77,6 @@
       </div>
     </form>
   </div>
-  <nav class="bottom-nav">
-    <a href="/dashboard">Home</a>
-  </nav>
   <script>
     function formatBalance(balance) {
       const formattedBalance = balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
