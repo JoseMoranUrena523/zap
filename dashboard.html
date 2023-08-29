@@ -3,64 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
-  <link rel="manifest" href="/public/site.webmanifest">
-  <link rel="mask-icon" href="/public/safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="shortcut icon" href="/public/favicon.ico">
-  <meta name="apple-mobile-web-app-title" content="SAT ZAP">
-  <meta name="application-name" content="SAT ZAP">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="msapplication-config" content="/public/browserconfig.xml">
-  <meta name="theme-color" content="#000000">
   <title>SAT ZAP</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   <style>
-    .top-bar {
-      background-color: #f8f9fa;
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .logo-img {
-      height: 40px;
-    }
-
-    .balance {
-      font-weight: bold;
-    }
-
-    .bottom-bar {
-      background-color: #f8f9fa;
-      box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .custom-photo {
-      width: 80px;
-      height: 80px;
-      margin-left: 20px;
-    }
-
-    .oval {
-      display: inline-block;
-      width: 16px;
-      height: 12px;
-      background-color: #f39c12;
-      border-radius: 50%;
-      margin-left: 8px;
-    }
+    .top-nav { display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; padding: 10px 20px; border-bottom: 1px solid #ccc; }
+    .logo img { width: 100px; }
+    .balance-container { display: flex; align-items: center; margin-left: auto; }
+    .balance-oval { width: 100px; height: 50px; background-color: #f0f0f0; border-radius: 50%; margin-right: 10px; }
+    .bottom-nav { background-color: #000000; text-align: center; padding: 10px 0; }
+    .bottom-nav a { color: #ffffff; text-decoration: none; margin: 0 20px; }
   </style>
 </head>
-<body class="d-flex min-vh-100 justify-content-center align-items-center p-4">
-  <div class="top-bar d-flex justify-content-between align-items-center p-3">
+<body class="d-flex flex-column min-vh-100 justify-content-between p-4">
+  <nav class="top-nav">
     <div class="logo">
-      <img src="/path/to/your/logo.png" alt="Logo" class="logo-img">
+      <img src="/public/logo.png" alt="SAT ZAP Logo">
     </div>
-    <div class="balance">
-      Balance: <span id="balance">Loading...</span> <span class="oval"></span>
+    <div class="balance-container">
+      <div class="balance-oval"></div>
+      <div class="balance">
+        <span id="balanceText">Balance: <span id="balance">Loading...</span></span>
+      </div>
     </div>
-  </div>
-
+  </nav>
   <div class="text-center">
     <h1>Welcome to SAT ZAP!</h1>
     <br>
