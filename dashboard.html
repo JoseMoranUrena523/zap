@@ -22,6 +22,7 @@
     color: red;
   }
 
+  /* Style for the modal overlay */
   .overlay {
       position: fixed;
       top: 0;
@@ -35,6 +36,7 @@
       z-index: 1000;
   }
   
+  /* Style for the modal container */
   .success-modal {
       max-width: 400px;
       margin: 0 auto;
@@ -44,42 +46,49 @@
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   }
   
+  /* Style for the modal header */
   .modal-header {
       text-align: center;
       margin-bottom: 20px;
   }
   
+  /* Style for the modal title */
   .modal-title {
       font-size: 24px;
       color: #333333;
   }
   
+  /* Style for modal content */
   .modal-content {
       margin-bottom: 20px;
   }
   
+  /* Style for email and balance */
   .modal-email, .modal-balance {
       color: #555555;
       margin-bottom: 10px;
   }
   
+  /* Style for action buttons */
   .action-button {
       background-color: #007bff;
       color: #ffffff;
       border: none;
-      padding: 10px 20px;
+      padding: 8px 16px; /* Slightly adjusted padding */
       border-radius: 5px;
       cursor: pointer;
-      margin: 0 5px;
+      margin: 0 3px; /* Slightly adjusted margin */
   }
   
+  /* Style for close button */
   .close-button {
       background-color: #ff6347;
       color: #ffffff;
       border: none;
-      padding: 10px 20px;
+      padding: 8px 16px; /* Slightly adjusted padding */
       border-radius: 5px;
       cursor: pointer;
+      margin-right: 5px; /* Adjusted margin */
   }
   
   /* Style for logout button */
@@ -87,10 +96,11 @@
       background-color: #666666;
       color: #ffffff;
       border: none;
-      padding: 10px 20px;
+      padding: 8px 16px; /* Slightly adjusted padding */
       border-radius: 5px;
       cursor: pointer;
       text-decoration: none;
+      margin-left: 5px; /* Adjusted margin */
   }
   
   /* Adjust deposit result style */
@@ -259,7 +269,9 @@
     balanceModal.innerHTML = `
       <div class="success-modal">
         <div class="modal-header">
+          <center>
             <h1 class="modal-title">Settings</h1>
+          </center>
         </div>
         <div class="modal-content">
             <p class="modal-email">Email: <span id="displayEmail">${window.localStorage.getItem("display_name")}</span></p>
@@ -298,6 +310,7 @@
     depositFormModal.classList.add("overlay");
     depositFormModal.innerHTML = `
       <div class="success-modal">
+       <center>
         <h2>Deposit</h2>
         <form id="depositForm">
           <label for="depositAmount">Amount (satoshi):</label>
@@ -313,6 +326,7 @@
         <br>
         <button id="backToBalanceBtn">Back</button>
         <button id="closeDepositBtn">Close</button>
+       </center>
       </div>
     `;
     document.body.appendChild(depositFormModal);
@@ -374,6 +388,7 @@
     withdrawFormModal.classList.add("overlay");
     withdrawFormModal.innerHTML = `
       <div class="success-modal">
+       <center>
         <h2>Withdraw</h2>
         <br>
         <form id="withdrawForm">
@@ -387,6 +402,7 @@
         <br>
         <button id="backToBalanceBtn">Back</button>
         <button id="closeWithdrawBtn">Close</button>
+       </center>
       </div>
     `;
     document.body.appendChild(withdrawFormModal);
