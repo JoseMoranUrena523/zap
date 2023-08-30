@@ -22,73 +22,66 @@
     color: red;
   }
 
-  /* Style for the modal overlay */
   .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
   }
   
   /* Style for the modal container */
   .success-modal {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%; /* Add this line to ensure the modal takes full width */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   }
   
-  /* Style for the modal header */
   .modal-header {
       text-align: center;
       margin-bottom: 20px;
   }
   
-  /* Style for the modal title */
   .modal-title {
       font-size: 24px;
       color: #333333;
   }
   
-  /* Style for modal content */
   .modal-content {
       margin-bottom: 20px;
   }
   
-  /* Style for email and balance */
   .modal-email, .modal-balance {
       color: #555555;
       margin-bottom: 10px;
   }
   
-  /* Style for action buttons */
   .action-button {
       background-color: #007bff;
       color: #ffffff;
       border: none;
-      padding: 8px 16px; /* Slightly adjusted padding */
+      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
-      margin: 0 3px; /* Slightly adjusted margin */
+      margin: 0 5px;
   }
   
-  /* Style for close button */
   .close-button {
       background-color: #ff6347;
       color: #ffffff;
       border: none;
-      padding: 8px 16px; /* Slightly adjusted padding */
+      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
-      margin-right: 5px; /* Adjusted margin */
   }
   
   /* Style for logout button */
@@ -96,11 +89,10 @@
       background-color: #666666;
       color: #ffffff;
       border: none;
-      padding: 8px 16px; /* Slightly adjusted padding */
+      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
       text-decoration: none;
-      margin-left: 5px; /* Adjusted margin */
   }
   
   /* Adjust deposit result style */
@@ -164,6 +156,7 @@
       .then(userData => {
         const userId = userData.sub;
         window.localStorage.setItem("display_name", userData.email);
+        window.localStorage.setItem("profile_picture", userData.picture);
         
         fetch(`/get-item?key=${userId}`)
         .then(response => response.json())
@@ -269,21 +262,23 @@
     balanceModal.innerHTML = `
       <div class="success-modal">
         <div class="modal-header">
-          <center>
-            <h1 class="modal-title">Settings</h1>
-          </center>
+          <h1 class="modal-title">Settings</h1>
         </div>
         <div class="modal-content">
-            <p class="modal-email">Email: <span id="displayEmail">${window.localStorage.getItem("display_name")}</span></p>
-            <p class="modal-balance">Wallet Balance: <span id="modalBalance">${document.getElementById("balance").textContent}</span></p>
-            <button id="depositBtn" class="action-button">Deposit</button>
-            <button id="withdrawBtn" class="action-button">Withdraw</button>
+          <div class="profile-picture">
+            <img src="${window.localStorage.getItem("profile_picture")}" alt="Profile Picture">
+          </div>
+          <p class="modal-email">Email: <span id="displayEmail">${window.localStorage.getItem("display_name")}</span></p>
+          <p class="modal-balance">Wallet Balance: <span id="modalBalance">${document.getElementById("balance").textContent}</span></p>
+          <button id="depositBtn" class="action-button">Deposit</button>
+          <br>
+          <button id="withdrawBtn" class="action-button">Withdraw</button>
         </div>
         <div class="modal-footer">
-            <button id="closeModalBtn" class="close-button">Close</button>
-            <a href="/logout" class="logout-link"><button class="logout-button">Logout</button></a>
+          <button id="closeModalBtn" class="close-button">Close</button>
+          <a href="/logout" class="logout-link"><button class="logout-button">Logout</button></a>
         </div>
-    </div>
+      </div>
     `;
     document.body.appendChild(balanceModal);
 
@@ -310,7 +305,6 @@
     depositFormModal.classList.add("overlay");
     depositFormModal.innerHTML = `
       <div class="success-modal">
-       <center>
         <h2>Deposit</h2>
         <form id="depositForm">
           <label for="depositAmount">Amount (satoshi):</label>
@@ -326,7 +320,6 @@
         <br>
         <button id="backToBalanceBtn">Back</button>
         <button id="closeDepositBtn">Close</button>
-       </center>
       </div>
     `;
     document.body.appendChild(depositFormModal);
@@ -388,7 +381,6 @@
     withdrawFormModal.classList.add("overlay");
     withdrawFormModal.innerHTML = `
       <div class="success-modal">
-       <center>
         <h2>Withdraw</h2>
         <br>
         <form id="withdrawForm">
@@ -402,7 +394,6 @@
         <br>
         <button id="backToBalanceBtn">Back</button>
         <button id="closeWithdrawBtn">Close</button>
-       </center>
       </div>
     `;
     document.body.appendChild(withdrawFormModal);
