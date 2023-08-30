@@ -40,8 +40,8 @@ app.get('/privacy-policy', (req, res) => {
   res.sendFile(__dirname + '/privacy-policy.html');
 });
 
-app.get('/arc-sw.js', (req, res) => {
-  res.sendFile(__dirname + '/arc-sw.js');
+app.get('/OneSignalSDKWorker.js', (req, res) => {
+  res.sendFile(__dirname + '/OneSignalSDKWorker.js');
 });
 
 app.get('/get-item', (req, res) => {
