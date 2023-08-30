@@ -37,20 +37,62 @@
 
 .success-modal {
     max-width: 400px;
-    width: 100%; /* Add this line to ensure the modal takes full width */
-    margin: 0 auto;
+    width: 90%; /* Adjust the width if needed */
     padding: 20px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
     max-height: 80vh;
-    max-width: 90%;
     overflow-y: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+}
+
+.success-modal h2 {
+    font-size: 24px;
+    color: #333333;
+}
+
+.success-modal form {
+    margin-top: 20px;
+}
+
+.success-modal label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555555;
+}
+
+.success-modal input[type="number"],
+.success-modal input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.success-modal button[type="submit"] {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.success-modal button.close-button {
+    background-color: #ff6347;
+    margin-left: 10px;
+}
+
+.success-modal button.close-button,
+.success-modal button.action-button {
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
 }
   
   .modal-header {
