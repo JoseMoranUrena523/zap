@@ -79,6 +79,22 @@
     </form>
   </div>
   <script>
+          function getPWADisplayMode() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+            if (document.referrer.startsWith('android-app://')) {
+              return 'twa';
+            } else if (navigator.standalone || isStandalone) {
+              return 'standalone';
+            }
+            return 'browser';
+          }
+
+          if (getPWADisplayMode() === 'browser') {
+            res.redirect("/logout");
+          }
+        </script>
+  <script>
     function formatBalance(balance) {
       const formattedBalance = balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       return `${formattedBalance} sats`;
