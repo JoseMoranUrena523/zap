@@ -307,7 +307,7 @@
       <div class="success-modal">
         <h2>Deposit</h2>
         <form id="depositForm">
-          <label for="depositAmount">Amount (satoshi):</label>
+          <label for="depositAmount">Amount (sats):</label>
           <input type="number" id="depositAmount" required>
           <br><br>
           <button type="submit" id="depositSubmitButton">Deposit</button>
@@ -316,7 +316,7 @@
         </form>
         <div id="depositResult"></div>
         <br>
-        <p>Note: Double-click on the invoice to copy the full invoice, and refresh to see your updated balance.</p>
+        <button id="copyAddressBtn">Copy Address</button>
         <br>
         <button id="backToBalanceBtn">Back</button>
         <button id="closeDepositBtn">Close</button>
@@ -365,7 +365,7 @@
         })
         .then(paymentResponse => {
           if (paymentResponse.invoice) {
-            depositResult.textContent = `Invoice: ${paymentResponse.invoice}`;
+            depositResult.textContent = paymentResponse.invoice;
             document.getElementById("depositSubmitButton").disabled = false;
           }
         })
@@ -375,6 +375,18 @@
         });
     });
   }
+
+  const copyAddressBtn = depositFormModal.querySelector("#copyAddressBtn");
+
+  copyAddressBtn.addEventListener("click", () => {
+    const tempTextarea = document.createElement('textarea');
+    tempTextarea.value = document.getElementById("depositResult").textContent;
+      
+    document.body.appendChild(tempTextarea);
+    tempTextarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextarea);
+  });
 
   function openWithdrawForm() {
     const withdrawFormModal = document.createElement("div");
