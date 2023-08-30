@@ -366,7 +366,7 @@
         </form>
         <div id="depositResult"></div>
         <br>
-        <button id="copyAddressBtn">Copy Address</button>
+        <button id="copyAddressBtn" style="display: none;">Copy Address</button>
         <br>
         <button id="backToBalanceBtn">Back</button>
         <button id="closeDepositBtn">Close</button>
@@ -428,6 +428,7 @@
           if (paymentResponse.invoice) {
             depositResult.textContent = paymentResponse.invoice;
             document.getElementById("depositSubmitButton").disabled = false;
+            document.getElementById("copyAddress").style.display = "block";
           }
         })
         .catch(error => {
