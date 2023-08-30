@@ -32,6 +32,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1000; /* Ensure the overlay is on top of other content */
   }
 
   .success-modal {
@@ -207,7 +208,7 @@
     const balanceModal = document.createElement("div");
     balanceModal.classList.add("overlay");
     balanceModal.innerHTML = `
-      <div class="success-modal">
+      <div class="success-modal full-screen-modal">
         <h1>Settings</h1>
         <br>
         <p>Current Balance:</p>
