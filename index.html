@@ -26,8 +26,33 @@
           <br>
           <p>Invest in your friends using <a href="https://lightning.network">Lightning</a>.</p>
           <br><br>
-          <a href="/login" class="text-center">Log In</a>
+          <a href="/login" class="text-center" id="loginButton">Log In</a>
+          <p id="browserText" style="display: none;">📲 Visit sat-zap.com on a phone to install the app.</p>
+          <p id="mobileBrowserText" style="display: none;">To install the app, you need to add this website to your home screen.</p>
+          <br><br>
+          <a href="/privacy-policy">Check out our privacy policy -></a>
         </div>
+        <script>
+          function getPWADisplayMode() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+            if (document.referrer.startsWith('android-app://')) {
+              return 'twa';
+            } else if (navigator.standalone || isStandalone) {
+              return 'standalone';
+            }
+            return 'browser';
+          }
+
+          if (getPWADisplayMode() === 'browser') {
+            document.getElementById('loginButton').style.display = "none";
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+              document.getElementById('mobileBrowserText').style.display = "block";
+            } else {
+              document.getElementById('browserText').style.display = "block";
+            }
+          }
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     </body>
 </html>
