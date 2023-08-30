@@ -50,16 +50,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
-  .oval {
-    height: 100px;
-    width: 100px;
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-    border-radius: 50%;
-    background: orange;
-  }
 </style>
 </head>
 <body class="d-flex min-vh-100 justify-content-center align-items-center p-4">
@@ -68,9 +58,7 @@
     <br>
     <p>Click on the balance text to open your settings menu!</p>
     <br><br>
-    <div class="oval">
-      <p class="position-absolute top-0 end-0 mt-2 me-2" id="balanceText">Balance: <span id="balance">Loading...</span></p>
-    </div>
+    <p class="position-absolute top-0 end-0 mt-2 me-2" id="balanceText">Balance: <span id="balance">Loading...</span></p>
     <form id="paymentForm">
       <div class="mb-3">
         <label for="address" class="form-label">Lightning Address:</label>
