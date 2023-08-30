@@ -20,6 +20,31 @@
     </head>
     <body>
       <center>
+        <div class="modal fade" id="installModal" tabindex="-1" aria-labelledby="installModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="installModalLabel">Add To Home Screen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                To install the app, you need to add this website to your home screen.
+                <br><br>
+                Depending on your device and browser, you can usually do this by following these steps:
+                <ul>
+                  <li>Open your browser's menu or options.</li>
+                  <li>Look for "Add to Home Screen," "Install App," or similar options.</li>
+                  <li>Follow the prompts to add the app to your home screen.</li>
+                </ul>
+                Once added, you can open the sat-zap.com app from your home screen.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+          
         <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
           <h1><img src="/public/lightning-bolt.png" alt="Lightning Bolt" width="128" height="128"></h1>
           <br>
@@ -49,7 +74,8 @@
           if (getPWADisplayMode() === 'browser') {
             document.getElementById('loginButton').style.display = "none";
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-              document.getElementById('mobileBrowserText').style.display = "block";
+              const installModal = new bootstrap.Modal(document.getElementById('installModal'));
+              installModal.show();
             } else {
               document.getElementById('browserText').style.display = "block";
             }
