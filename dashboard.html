@@ -336,6 +336,17 @@
       openBalanceModal();
     });
 
+  const copyAddressBtn = depositFormModal.querySelector("#copyAddressBtn");
+  copyAddressBtn.addEventListener("click", () => {
+    const tempTextarea = document.createElement('textarea');
+    tempTextarea.value = document.getElementById("depositResult").textContent;
+      
+    document.body.appendChild(tempTextarea);
+    tempTextarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextarea);
+  });
+
     const depositForm = depositFormModal.querySelector("#depositForm");
     depositForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -376,18 +387,6 @@
         });
     });
   }
-
-  const copyAddressBtn = depositFormModal.querySelector("#copyAddressBtn");
-
-  copyAddressBtn.addEventListener("click", () => {
-    const tempTextarea = document.createElement('textarea');
-    tempTextarea.value = document.getElementById("depositResult").textContent;
-      
-    document.body.appendChild(tempTextarea);
-    tempTextarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempTextarea);
-  });
 
   function openWithdrawForm() {
     const withdrawFormModal = document.createElement("div");
