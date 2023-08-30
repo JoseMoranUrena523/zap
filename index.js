@@ -40,6 +40,10 @@ app.get('/privacy-policy', (req, res) => {
   res.sendFile(__dirname + '/privacy-policy.html');
 });
 
+app.get('/arc-sw.js', (req, res) => {
+  res.sendFile(__dirname + '/arc-sw.js');
+});
+
 app.get('/get-item', (req, res) => {
   const key = req.query.key;
   const apiKeyUrl = `https://database.sat-zap.com/get?key=${key}`;
